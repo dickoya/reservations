@@ -1,0 +1,8 @@
+#crudl
+#create -> post
+#read -> get
+#update -> put
+#delete -> delete
+#list -> get
+
+GET http://localhost:8080/api/shows
