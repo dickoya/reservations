@@ -2,6 +2,6 @@ POST http://localhost:8080/api/shows
 Content-Type: application/json
 
 {
-  "firstname": "ibrahim",
-  "lastname": "Diallo"
+  "slug": "cinema-_de_paris",
+  "title": "cinema de paris"
 }
