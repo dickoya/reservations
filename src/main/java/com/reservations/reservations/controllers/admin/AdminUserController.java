@@ -1,10 +1,10 @@
 package com.reservations.reservations.controllers.admin;
 
-import com.reservations.reservations.repositories.ArtistRepository;
 import com.reservations.reservations.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +27,13 @@ public class AdminUserController {
         model.addAttribute("users", userRepository.findById(id).orElse(null));
         return "admin/users/show"; // Returns the template name "index"
     }
+
+    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        userRepository.deleteById(id);
+    }
+
+
 
 }
