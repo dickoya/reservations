@@ -23,11 +23,12 @@
             <td th:text="${user.lastname}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.langue}"></td>
+
             <td>
-                <a th:href="@{/admin/users/{id}(id=${user.id})}">Supprimer</a>
+                <a th:href="@{/admin/users/{id}(id=${user.id})/delete}">Supprimer</a>
             </td>
             <td>
-                <a th:href="@{/admin/users/{id}(id=${user.id})}">Edit</a>
+                <a th:href="@{/admin/users/{id}(id=${user.id})/edit}">Edit</a>
             </td>
         </tr>
         </tbody>
