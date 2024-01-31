@@ -40,8 +40,14 @@ public class ApiArtistController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public Artist delete(@PathVariable Long id) {
+        Artist foundArtist = artistRepository.findById(id).orElse(null);
+        if (foundArtist == null)
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Artist not found"
+            );
         artistRepository.deleteById(id);
+        return foundArtist;
     }
 }
 

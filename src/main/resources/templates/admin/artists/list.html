@@ -1,51 +1,132 @@
+<!DOCTYPE html>
 <html lang="fr" th:replace="~{admin/layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
-<title>Réservations - Artistes</title>
-
+<head>
+    <title>Réservations - Artistes</title>
+</head>
+<body>
 <div class="content">
-    <table class="table table-striped table-hover">
+    <!-- Bouton pour créer un artiste -->
+    <button id="btn-create-user" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Créer un artiste
+    </button>
+
+    <!-- Modal de création d'artiste -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Créer un artiste</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulaire de création d'artiste -->
+                    <form id="form-create-artist">
+                        <label for="firstname">Prénom</label>
+                        <input class="form-control" type="text" id="firstname">
+
+                        <label for="lastname">Nom de famille</label>
+                        <input class="form-control" type="text" id="lastname">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-submit-artist">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des artistes -->
+    <table id="artists" class="table">
+        <thead>
         <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>Prénom</th>
+            <th>Nom de famille</th>
             <th>Actions</th>
         </tr>
+        </thead>
+        <tbody>
+        <!-- Boucle pour afficher les artistes -->
         <tr th:each="artist : ${artists}">
             <td th:text="${artist.firstname}"></td>
             <td th:text="${artist.lastname}"></td>
             <td>
-                <a th:href="@{/admin/artists/{id}(id=${artist.id})}">View</a>
+                <a th:href="@{/admin/artists/{id}(id=${artist.id})}">Voir</a>
+                <a class="delete-artist" th:href="@{/api/artists/{id}(id=${artist.id})}" th:data-id="${artist.id}">Supprimer</a>
             </td>
-
         </tr>
+        </tbody>
     </table>
 </div>
-<script>
-
-    alert('Bienvenu sur ma page!');
-</script>
-
 
 <script>
-    // async function loadArtists() {
-    //     const response = await fetch("http://localhost:8080/api/artists");
-    //     const artists = await response.json();
-    //     const table = document.getElementById("artists")
-    //     artists.forEach(artist => {
-    //         const tr = document.createElement("tr")
-    //         const cell1 = document.createElement("td")
-    //         const cell2 = document.createElement("td")
-    //
-    //         cell1.innerText = artist.firstname
-    //         cell2.innerText = artist.lastname
-    //
-    //         tr.appendChild(cell1)
-    //         tr.appendChild(cell2)
-    //
-    //         table.appendChild(tr)
-    //     })
-    // }
-    //
-    // window.addEventListener('load', function () {
-    //     loadArtists()
-    // }, false);
+    // Fonction pour supprimer un artiste
+    function deleteArtist(link) {
+        fetch(`${link.href}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                link.closest("tr").remove();
+
+            })
+            .catch(() => {
+                console.log("Une erreur s'est produite");
+            });
+    }
+
+    // Ajout d'un écouteur d'événement pour chaque lien de suppression d'artiste
+    const links = document.getElementsByClassName("delete-artist");
+    for (const link of links) {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            deleteArtist(link);
+        });
+    }
+
+    // Récupération des éléments du formulaire
+    const firstnameInput = document.getElementById('firstname');
+    const lastnameInput = document.getElementById('lastname');
+    const buttonSubmit = document.getElementById("btn-submit-artist");
+
+    // Ajout d'un écouteur d'événement pour le bouton de soumission du formulaire
+    buttonSubmit.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const firstname = firstnameInput.value;
+        const lastname = lastnameInput.value;
+
+        const data = { firstname, lastname };
+
+        // Envoi de la requête POST pour créer un nouvel artiste
+        fetch('/api/artists', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(response => {
+                // Ajout de la nouvelle entrée au tableau
+                $("table tbody").append(`
+                    <tr>
+                        <td>${response.firstname}</td>
+                        <td>${response.lastname}</td>
+                        <td>
+                            <a href='/admin/artists/${response.id}'>Voir</a>
+                            <a href='/api/artists/${response.id}' data-id="${response.id}">Supprimer</a>
+                        </td>
+                    </tr>`
+                );
+
+                // Ajout d'un écouteur d'événement pour le nouveau lien de suppression
+                const newLink = $('#artists tr:last a:last')[0];
+                newLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    deleteArtist(newLink);
+                });
+            });
+    });
 </script>
+</body>
 </html>

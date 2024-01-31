@@ -28,11 +28,6 @@ public class AdminUserController {
         return "admin/users/show"; // Returns the template name "index"
     }
 
-    //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        userRepository.deleteById(id);
-    }
 
 
 
