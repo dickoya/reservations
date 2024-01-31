@@ -10,6 +10,7 @@
             <th>Lastname</th>
             <th>Email</th>
             <th>Langue</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
         <tr th:each="user : ${users}">
@@ -19,6 +20,7 @@
             <td th:text="${user.lastname}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.langue}"></td>
+            <td th:text="${user.role}"></td>
             <td>
                 <a th:href="@{/admin/users/{id}(id=${user.id})}">View</a>
                 <a class="delete-user">Delete</a>

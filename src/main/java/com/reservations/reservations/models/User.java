@@ -14,9 +14,10 @@ public class User {
     private String lastname; // Le nom de famille de l'utilisateur
     private String email; // L'adresse e-mail de l'utilisateur
     private String langue; // La langue préférée de l'utilisateur
+    private String role; // Le role de l'utilisateur (soit Admin ou User)
 
     // Constructeur
-    public User(int id, String login, String password, String firstname, String lastname, String email, String langue) {
+    public User(int id, String login, String password, String firstname, String lastname, String email, String langue, String role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -24,6 +25,7 @@ public class User {
         this.lastname = lastname;
         this.email = email;
         this.langue = langue;
+        this.role = role;
     }
 
     public User() {
@@ -86,5 +88,11 @@ public class User {
         this.langue = langue;
     }
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
