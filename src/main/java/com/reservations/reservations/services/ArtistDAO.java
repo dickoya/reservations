@@ -1,4 +1,4 @@
-package com.reservations.reservations.daos;
+package com.reservations.reservations.services;
 
 import com.reservations.reservations.models.Artist;
 import com.reservations.reservations.repositories.ArtistRepository;

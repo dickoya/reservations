@@ -2,6 +2,8 @@ package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -15,9 +17,12 @@ public class User {
     private String email; // L'adresse e-mail de l'utilisateur
     private String langue; // La langue préférée de l'utilisateur
     private String role; // Le role de l'utilisateur (soit Admin ou User)
+    private Date created_at;
 
     // Constructeur
-    public User(int id, String login, String password, String firstname, String lastname, String email, String langue, String role) {
+
+
+    public User(int id, String login, String password, String firstname, String lastname, String email, String langue, String role, Date created_at) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -26,6 +31,7 @@ public class User {
         this.email = email;
         this.langue = langue;
         this.role = role;
+        this.created_at = created_at;
     }
 
     public User() {
@@ -94,5 +100,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 }
