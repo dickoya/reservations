@@ -1,6 +1,5 @@
 package com.reservations.reservations.controllers.admin;
-
-import com.reservations.reservations.repositories.ArtistRepository;
+import com.reservations.reservations.services.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminArtistController {
 
     @Autowired
-    private ArtistRepository artistRepository;
+    private ArtistService artistService;
 
     @GetMapping()
     public String list(ModelMap model) {
-        model.addAttribute("artists", artistRepository.findAll());
+        model.addAttribute("artists", artistService.findAll());
         return "admin/artists/list"; // Returns the template name "index"
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable Long id, ModelMap model) {
-        model.addAttribute("artist", artistRepository.findById(id).orElse(null));
+        model.addAttribute("artist", artistService.findById(id));
         return "admin/artists/show"; // Returns the template name "index"
     }
 }
