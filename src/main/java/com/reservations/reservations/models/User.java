@@ -1,6 +1,7 @@
 package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -15,21 +16,23 @@ public class User {
     private String firstname; // Le prénom de l'utilisateur
     private String lastname; // Le nom de famille de l'utilisateur
     private String email; // L'adresse e-mail de l'utilisateur
-    private String langue; // La langue préférée de l'utilisateur
+    private String language; // La langue préférée de l'utilisateur
     private String role; // Le role de l'utilisateur (soit Admin ou User)
+
+    @CreationTimestamp
     private Date created_at;
 
     // Constructeur
 
 
-    public User(int id, String login, String password, String firstname, String lastname, String email, String langue, String role, Date created_at) {
+    public User(int id, String login, String password, String firstname, String lastname, String email, String language, String role, Date created_at) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.langue = langue;
+        this.language = language;
         this.role = role;
         this.created_at = created_at;
     }
@@ -86,12 +89,12 @@ public class User {
         this.email = email;
     }
 
-    public String getLangue() {
-        return langue;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setLangue(String langue) {
-        this.langue = langue;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getRole() {
