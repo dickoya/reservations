@@ -3,10 +3,10 @@ package com.reservations.reservations.services;
 import com.reservations.reservations.models.Artist;
 import com.reservations.reservations.repositories.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
-public class ArtistDAO {
+@Service
+public class ArtistService {
 
     @Autowired
     private ArtistRepository artistRepository;

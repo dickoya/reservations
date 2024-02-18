@@ -20,14 +20,14 @@
             <td th:text="${user.firstname}"></td>
             <td th:text="${user.lastname}"></td>
             <td th:text="${user.email}"></td>
-            <td th:text="${user.langue}"></td>
+            <td th:text="${user.language}"></td>
             <td th:text="${user.role}"></td>
             <td th:text="${user.created_at}"></td>
             <td>
                 <a th:href="@{/admin/users/{id}(id=${user.id})}">View</a>
                 <a th:href="@{/admin/users/{id}(id=${user.id})}" onclick="deleteUser()">Delete</a>
 
-                <a class="delete-artist" th:href="@{/api/artists/{id}(id=${artist.id})}" th:data-id="${artist.id}">Supprimer</a>
+                <a class="delete-artist" th:href="@{/api/users/{id}(id=${user.id})}" th:data-id="${user.id}">Supprimer</a>
 
 
             </td>
