@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Localities</title>
+</head>
+<body>
+<h1>Localities</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Postal Code</th>
+        <th>Locality</th>
+    </tr>
+    <tr th:each="locality : ${localities}">
+        <td th:text="${locality.id}"></td>
+        <td th:text="${locality.postalCode}"></td>
+        <td th:text="${locality.locality}"></td>
+    </tr>
+</table>
+</body>
+</html>
