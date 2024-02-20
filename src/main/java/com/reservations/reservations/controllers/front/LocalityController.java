@@ -14,18 +14,11 @@ public class LocalityController {
     @Autowired
     private LocalityService localityService;
 
+
     @GetMapping()
-    public List<Locality> getAllLocalities() {
-        return localityService.getAllLocalities();
+    public String list(ModelMap model) {
+        model.addAttribute("localities", localityService.findAll());
+        return "front/localities/list"; // Returns the template name "index"
     }
 
-  /*  @GetMapping()
-    public String list(ModelMap model) {
-        model.addAttribute("locality", localityService.findAll());
-        return "admin/artists/list"; // Returns the template name "index"
-    }*/
-    /*@PostMapping
-    public Locality createLocality(@RequestBody Locality locality) {
-        return localityService.createLocality(locality);
-    }*/
 }
