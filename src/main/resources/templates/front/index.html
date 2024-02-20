@@ -1,14 +1,84 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Théâtre</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Ajoutez votre propre style CSS ici */
+    </style>
 </head>
 <body>
-Page d'accueil
-En construction...
+<!-- Menu de navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Réservations_Théâtral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">LogOut</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- En-tête -->
+<header class="bg-light py-5">
+    <div class="container text-center">
+        <h1>Bienvenue sur Votre Site</h1>
+        <p class="lead">Le plateau théâtral.</p>
+    </div>
+</header>
+
+<!-- Corps de la page -->
+<div class="container my-5">
+    <h2>Contenu principal</h2>
+    <p>Contenu de la page...</p>
+</div>
+<div class="container my-5" style=": url('templates/front/images/theatre.jpeg'); background-size: cover; background-position: center;">
+    <h2>Contenu principal</h2>
+    <p>L'objectif théâtral est souvent multidimensionnel, visant à divertir, éduquer, émouvoir,
+        engager et inspirer le public tout en explorant les différentes facettes de l'expérience humaine et de la société.</p>
+</div>
+
+
+
+
+<!-- Pied de page -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2024 Mon Site. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
