@@ -27,11 +27,6 @@ public class LocalityService {
         localityRepository.deleteById(id);
     }
 
-
-
-
-
-
     // Autres méthodes pour d'autres opérations métier
 
 }
