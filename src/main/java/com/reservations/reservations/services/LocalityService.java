@@ -15,16 +15,9 @@ public class LocalityService {
     public List<Locality> getAllLocalities() {
         return localityRepository.findAll();
     }
-    public Locality save(Locality local) {
-        return localityRepository.save(local);
-    }
 
-    public void delete(Locality local) {
-        localityRepository.delete(local);
-    }
-
-    public void deleteById(Long id) {
-        localityRepository.deleteById(id);
+    public Iterable<Locality> findAll() {
+        return localityRepository.findAll();
     }
 
     // Autres méthodes pour d'autres opérations métier

@@ -12,9 +12,7 @@ public class TypeService {
     @Autowired
     private TypeRepository typeRepository;
 
-    // Add methods for business logic
-
-    public List<Types> getAllTypes() {
+    public Iterable<Types> findAll() {
         return typeRepository.findAll();
     }
 }
