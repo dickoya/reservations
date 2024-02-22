@@ -1,9 +1,7 @@
 package com.reservations.reservations.controllers.api;
 
-import com.reservations.reservations.models.Artist;
 import com.reservations.reservations.models.Show;
-import com.reservations.reservations.repositories.ArtistRepository;
-import com.reservations.reservations.repositories.ShowRepository;
+import com.reservations.reservations.services.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,36 +12,36 @@ import org.springframework.web.server.ResponseStatusException;
 public class ApiShowController {
 
     @Autowired
-    private ShowRepository showRepository;
+    private ShowService showService;
 
     @GetMapping()
     public Iterable<Show> getAll() {
-        return showRepository.findAll();
+        return showService.findAll();
     }
 
     @GetMapping("/{id}")
     public Show getById(@PathVariable Long id) {
-        return showRepository.findById(id).orElseThrow(() -> new RuntimeException("Show not found"));
+        return showService.findById(id);
     }
 
     @PostMapping()
     public Show post(@RequestBody Show show) {
-        return showRepository.save(show);
+        return showService.save(show);
     }
 
     @PutMapping()
     public Show put(@RequestBody Show show) {
-        Show foundShow = showRepository.findById(show.getId()).orElse(null);
+        Show foundShow = showService.findById(show.getId());
         if (foundShow == null)
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Show not found"
             );
-        return showRepository.save(show);
+        return showService.save(show);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        showRepository.deleteById(id);
+        showService.deleteById(id);
     }
 }
 

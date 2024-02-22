@@ -7,5 +7,5 @@ Content-Type: application/json
   "firstname": "Ben",
   "lastname": "Kaké",
   "email": "ben@exemple.com",
-  "langue": "Fr"
+  "langue": ""
 }

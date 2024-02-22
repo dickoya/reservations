@@ -22,12 +22,11 @@
             <td th:text="${user.firstname}"></td>
             <td th:text="${user.lastname}"></td>
             <td th:text="${user.email}"></td>
-            <td th:text="${user.langue}"></td>
+            <td th:text="${user.language}"></td>
+
             <td>
-                <a th:href="@{/admin/users/{id}(id=${user.id})}">Supprimer</a>
-            </td>
-            <td>
-                <a th:href="@{/admin/users/{id}(id=${user.id})}">Edit</a>
+                <a th:href="@{/admin/users/{id}/delete(id=${user.id})}">Supprimer</a>
+                <a th:href="@{/admin/users/{id}/edit(id=${user.id})}">Edit</a>
             </td>
         </tr>
         </tbody>
