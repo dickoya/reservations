@@ -52,7 +52,7 @@ function createUser() {
     const data = { firstname, lastname };
 
     // Envoi de la requête POST pour créer un nouvel artiste
-    fetch('/api/artists', {
+    fetch('artists', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -69,8 +69,8 @@ function createUser() {
                 <td>${response.firstname}</td>
                 <td>${response.lastname}</td>
                 <td>
-                    <a href='/admin/artists/${response.id}'>Voir</a>
-                    <a href='/api/artists/${response.id}' data-id="${response.id}">Supprimer</a>
+                    <a href='/artists/${response.id}'>Voir</a>
+                    <a href='/artists/${response.id}' data-id="${response.id}">Supprimer</a>
                 </td>
             </tr>`
         );
@@ -96,7 +96,7 @@ function editArtist() {
     const data = { id, firstname, lastname };
 
     // Envoi de la requête POST pour créer un nouvel artiste
-    fetch('/api/artists', {
+    fetch('/artists', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

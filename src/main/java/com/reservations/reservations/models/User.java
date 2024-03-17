@@ -3,7 +3,9 @@ package com.reservations.reservations.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -11,20 +13,25 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id; // L'identifiant unique de l'utilisateur
+    @Column(name = "login", nullable = false)
     private String login; // Le nom d'utilisateur de l'utilisateur
+    @Column(name = "password", nullable = false)
     private String password; // Le mot de passe de l'utilisateur
+    @Column(name = "firstname", nullable = false)
     private String firstname; // Le prénom de l'utilisateur
+    @Column(name = "lastname", nullable = false)
     private String lastname; // Le nom de famille de l'utilisateur
+    @Column(name = "email", nullable = false)
     private String email; // L'adresse e-mail de l'utilisateur
+    @Column(name = "language", nullable = false)
     private String language; // La langue préférée de l'utilisateur
+    @Column(name = "role", nullable = false)
     private String role; // Le role de l'utilisateur (soit Admin ou User)
-
     @CreationTimestamp
     private Date created_at;
 
+
     // Constructeur
-
-
     public User(int id, String login, String password, String firstname, String lastname, String email, String language, String role, Date created_at) {
         this.id = id;
         this.login = login;

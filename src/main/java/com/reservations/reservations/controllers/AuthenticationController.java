@@ -1,4 +1,4 @@
-package com.reservations.reservations.controllers.front;
+package com.reservations.reservations.controllers;
 
 import com.reservations.reservations.models.Role;
 import com.reservations.reservations.models.User;

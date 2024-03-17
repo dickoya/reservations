@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" th:replace="~{admin/layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
 <head>
     <title>Réservations - Artistes</title>
 </head>
@@ -78,9 +78,9 @@
             <td th:text="${artist.firstname}"></td>
             <td th:text="${artist.lastname}"></td>
             <td>
-                <a th:href="@{/admin/artists/{id}(id=${artist.id})}">Voir</a>
-                <a class="delete-artist" th:href="@{/api/artists/{id}(id=${artist.id})}" th:data-id="${artist.id}">Supprimer</a>
-                <a class="edit-artist" th:href="@{/api/artists/{id}(id=${artist.id})}" th:data-id="${artist.id}" data-bs-toggle="modal" data-bs-target="#editArtistModal">Edit</a>
+                <a th:href="@{artists/{id}(id=${artist.id})}">Voir</a>
+                <a class="delete-artist" th:href="@{artists/{id}(id=${artist.id})}" th:data-id="${artist.id}">Supprimer</a>
+                <a class="edit-artist" th:href="@{artists/{id}(id=${artist.id})}" th:data-id="${artist.id}" data-bs-toggle="modal" data-bs-target="#editArtistModal">Edit</a>
             </td>
         </tr>
         </tbody>
