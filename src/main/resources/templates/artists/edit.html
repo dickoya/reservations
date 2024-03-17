@@ -1,8 +1,8 @@
-<html lang="fr" th:replace="~{admin/layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
 <title>Réservations - Artistes</title>
 
 
-    <form action="/admin/edit" method="post">
+    <form action="/edit" method="post">
         <input type="text" name="id" value="${artists.id}" />
         <input type="text" name="Nom" value="${artist.firstname}" />
         <input type="text" name="Prenom" value="${artist.lastname}" />
