@@ -7,6 +7,11 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .header-with-background {
+            background-image: url('https://i.pinimg.com/736x/ad/cf/b4/adcfb43aa09547811f678ffb9f37c80f.jpg');
+            background-size: cover;
+            background-position: center;
+        }
 
     </style>
 </head>
@@ -14,7 +19,7 @@
 <!-- Menu de navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Réservations_Théâtral</a>
+        <a class="navbar-brand" href="#">Le plateau théâtral</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,44 +49,79 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
-
+                <form method="GET">
+                    <label>
+                        <input name="sortBy" th:value="${sortBy}" hidden />
+                    </label>
+                    <label>
+                        <input name="sortOrder" th:value="${sortOrder}" hidden />
+                    </label>
+                    <label>
+                        <input placeholder="Rechercher" name="searchString" th:value="${searchString}" />
+                    </label>
+                    <button type="Submit">Submit</button>
+                </form>
             </ul>
         </div>
     </div>
 </nav>
 
 <!-- En-tête -->
-<header class="bg-light py-5">
-    <div class="container text-center">
-        <h1>Bienvenue sur Votre Site</h1>
-        <p class="lead">Le plateau théâtral.</p>
+<header class="bg-light py-5 header-with-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3> Stevie Nicks </h3>
+                <p>Le mardi 16 juillet, l'icône Stevie Nicks se produira au Sportpaleis, à <br>
+                    Anvers. Réservez vos tickets à partir du vendredi 22 mars à 12 heures !</p>
+                <a class="btn btn-primary" href="/bay">Acheter</a>
+            </div>
+        </div>
     </div>
 </header>
-
-<!-- Corps de la page -->
 <div class="container my-5">
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='when', sortOrder='asc', searchString=${searchString})}">Tri par Date</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='when', sortOrder='desc', searchString=${searchString})}">Tri par Date Inversé</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='asc', searchString=${searchString})}">Tri par nom</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='desc', searchString=${searchString})}">Tri par nom Inversé</a>
+
     <h2>Contenu principal</h2>
-    <p>Contenu de la page...</p>
-</div>
-<div class="container my-5" style=": url('templates/front/images/theatre.jpeg'); background-size: cover; background-position: center;">
-    <h2>Contenu principal</h2>
-    <p>L'objectif théâtral est souvent multidimensionnel, visant à divertir, éduquer, émouvoir,
-        engager et inspirer le public tout en explorant les différentes facettes de l'expérience humaine et de la société.</p>
-</div>
-
-
-
-
-<!-- Pied de page -->
-<footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <p>&copy; 2024 Mon Site. Tous droits réservés.</p>
+    <div class="row">
+        <div th:each="r : ${representations}" class="card col-4" style="width: 18rem;">
+            <img th:src="@{${'/images/' + r.show.posterUrl}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${r.show.title}">Card title</h5>
+                <p th:text="${r.when}" class="card-text"></p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div>
+        </div>
     </div>
-</footer>
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div class="row">
+        <a class="btn btn-primary" th:href="@{/(sortBy=${sortBy}, sortOrder=${sortOrder}, page=${page-1})}" th:if="${page > 0}">Previous</a>
+        <a class="btn btn-primary" th:href="@{/(sortBy=${sortBy}, sortOrder=${sortOrder}, page=${page+1})}" th:if="${page < (totalPages-1)}">Next</a>
+    </div>
+    <div class="container my-5" style=": url('templates/front/images/theatre.jpeg'); background-size: cover; background-position: center;">
+        <h2>Contenu principal</h2>
+        <p>L'objectif théâtral est souvent multidimensionnel, visant à divertir, éduquer, émouvoir,
+            engager et inspirer le public tout en explorant les différentes facettes de l'expérience humaine et de la société.</p>
+    </div>
+
+
+
+
+    <!-- Pied de page -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Mon Site. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
