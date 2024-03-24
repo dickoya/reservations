@@ -25,10 +25,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/", "/error").permitAll();
-                    authorize.requestMatchers("/admin/**", "/api/**").hasRole(Role.ADMIN.getValue());
-                    authorize.requestMatchers("/login**", "/register", "process-register").anonymous();
-                    authorize.anyRequest().hasAnyRole(Role.ADMIN.getValue(), Role.MEMBER.getValue());
+//                    authorize.requestMatchers("/", "/error").permitAll();
+//                    authorize.requestMatchers("/admin/**", "/api/**").hasRole(Role.ADMIN.getValue());
+//                    authorize.requestMatchers("/login**", "/register", "process-register").anonymous();
+//                    authorize.anyRequest().hasAnyRole(Role.ADMIN.getValue(), Role.MEMBER.getValue());
+                    authorize.anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> formLogin.defaultSuccessUrl("/"))
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/**"))

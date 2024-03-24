@@ -30,6 +30,8 @@ public class User {
     @CreationTimestamp
     private Date created_at;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Representation> representations = new ArrayList<>();
 
     // Constructeur
     public User(int id, String login, String password, String firstname, String lastname, String email, String language, String role, Date created_at) {
@@ -118,5 +120,13 @@ public class User {
 
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
+    }
+
+    public List<Representation> getRepresentations() {
+        return representations;
+    }
+
+    public void setRepresentations(List<Representation> representations) {
+        this.representations = representations;
     }
 }
