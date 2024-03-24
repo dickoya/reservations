@@ -1,6 +1,10 @@
 package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="artists")
@@ -8,10 +12,16 @@ public class Artist {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "firstname")
     private String firstname;
-    //@NotEmpty(message = "The lastname must not be empty.")
-
+    @Column(name = "lastname")
     private String lastname;
+
+
+
+    @ManyToMany(mappedBy = "artists")
+    private List<Type> types = new ArrayList<>();
+
 
 
     protected Artist() {
@@ -42,5 +52,12 @@ public class Artist {
 
     public Long getId() {
         return id;
+    }
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
     }
 }
