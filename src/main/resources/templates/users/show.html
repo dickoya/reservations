@@ -10,7 +10,8 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
-            <th>language</th>
+            <th>Language</th>
+            <th>Action</th>
 
         </tr>
         </thead>
@@ -23,7 +24,8 @@
             <td th:text="${user.language}"></td>
 
             <td>
-
+                <a class="btn btn-primary" th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+                <a class="" th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
             </td>
         </tr>
         </tbody>
