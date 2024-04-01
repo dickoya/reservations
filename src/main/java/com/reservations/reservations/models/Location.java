@@ -1,5 +1,6 @@
 package com.reservations.reservations.models;
 
+import com.github.slugify.Slugify;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -9,16 +10,14 @@ import java.util.List;
 @Table(name="locations")
 public class Location {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Column(name = "slug")
+    @Column(name = "slug", unique=true)
     private String slug;
     @Column(name = "designation")
     private String designation;
     @Column(name = "address")
     private String address;
-//    @Column(name = "locality_id")
-    //    private int locality_id;
     @ManyToOne
     @JoinColumn(name="locality_id", nullable=false)
     private Locality locality;
@@ -32,6 +31,20 @@ public class Location {
 
     @OneToMany(targetEntity=Representation.class, mappedBy="location")
     private List<Representation> representations = new ArrayList<>();
+
+
+    public Location(String slug, String designation, String address, Locality locality, String website, String phone) {
+        Slugify slg = new Slugify();
+
+        this.slug = slg.slugify(designation);
+        this.designation = designation;
+        this.address = address;
+        this.locality = locality;
+        this.website = website;
+        this.phone = phone;
+    }
+
+
     protected Location() { }
 
     public Long getId() {
@@ -104,5 +117,20 @@ public class Location {
 
     public void setRepresentations(List<Representation> representations) {
         this.representations = representations;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", slug='" + slug + '\'' +
+                ", designation='" + designation + '\'' +
+                ", address='" + address + '\'' +
+                ", locality=" + locality +
+                ", website='" + website + '\'' +
+                ", phone='" + phone + '\'' +
+                ", shows=" + shows +
+                ", representations=" + representations +
+                '}';
     }
 }

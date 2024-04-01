@@ -2,27 +2,27 @@ package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="representations")
 public class Representation {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    /**
-     * Date de création de la représentation
-     */
     @ManyToOne
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
 
-    private Time when;
+    private Integer PlaceAvailable;
+
+    /**
+     * Date de la représentation
+     */
+    private LocalDateTime representationDate;
 
     /**
      * Lieu de prestation de la représentation
@@ -33,10 +33,13 @@ public class Representation {
 
     @ManyToMany
     @JoinTable(
-            name = "representation_user",
-            joinColumns = @JoinColumn(name = "id"),
+            name = "representations_users",
+            joinColumns = @JoinColumn(name = "representation_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
+
+    public Representation() { }
+
 
     public int getId() {
         return id;
@@ -46,12 +49,12 @@ public class Representation {
         this.id = id;
     }
 
-    public Time getWhen() {
-        return when;
+    public LocalDateTime getRepresentationDate() {
+        return representationDate;
     }
 
-    public void setWhen(Time when) {
-        this.when = when;
+    public void setRepresentationDate(LocalDateTime representationDate) {
+        this.representationDate = representationDate;
     }
 
     public Show getShow() {
@@ -70,11 +73,19 @@ public class Representation {
         this.location = location;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Integer getPlaceAvailable() {
+        return PlaceAvailable;
+    }
+
+    public void setPlaceAvailable(Integer numberOfPlaceAvailable) {
+        PlaceAvailable = numberOfPlaceAvailable;
     }
 }
