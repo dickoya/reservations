@@ -12,8 +12,8 @@ public interface RepresentationRepository extends JpaRepository<Representation, 
 
     List<Representation> findAllByOrderByShowTitleAsc();
     List<Representation> findAllByOrderByShowTitleDesc();
-    List<Representation> findAllByOrderByWhenAsc();
-    List<Representation> findAllByOrderByWhenDesc();
+    List<Representation> findAllByOrderByRepresentationDateAsc();
+    List<Representation> findAllByOrderByRepresentationDateDesc();
     Page<Representation> findAllByShowTitleLike(String searchString, PageRequest pageable);
 
 

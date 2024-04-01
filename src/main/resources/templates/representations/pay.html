@@ -1,0 +1,53 @@
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Artistes</title>
+
+<div class="content">
+    <h1 th:text="${representation.show.title}"></h1>
+    <div th:text="${representation.show.location.locality.locality}"></div>
+    <div>nombre de place: <span th:text="${numberOfPlace}"></span></div>
+
+    <p th:text="${clientSecret}"></p>
+
+    <div id="checkout">
+        <!-- Checkout will insert the payment form here -->
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("pk_test_51OzQlP00c6h81w5CQSbSbUQ1JnO3gvzK7xaIBTOvZVB5wI19zXtkxbIuuEdWJXpO6R9kYyb81Z7bu9QlMer8wSig001ucY4STb");
+
+
+    document.addEventListener("DOMContentLoaded", async function (event) {
+        try {
+            const response = await fetch("/representations/payment-create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "[[${_csrf.headerName}]]": "[[${_csrf.token}]]"
+                },
+                body: new URLSearchParams({
+                    id: "[[${representation.id}]]",
+                    numberOfPlace: "[[${numberOfPlace}]]"
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch client secret");
+            }
+
+            const data = await response.json();
+            const { clientSecret } = data;
+
+            const checkout = await stripe.initEmbeddedCheckout({
+                fetchClientSecret: async () => clientSecret,
+            });
+
+            checkout.mount(document.getElementById("checkout"));
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+</script>
+</html>

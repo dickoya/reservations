@@ -1,0 +1,13 @@
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Artistes</title>
+
+<div class="content">
+    <h1 th:text="${representation.show.title}"></h1>
+    <div th:text="${representation.show.location.locality.locality}"></div>
+    <a th:href="@{'/representations/' + ${representation.id} + '/places'}" class="btn btn-primary">Acheter</a>
+</div>
+
+
+<script>
+</script>
+</html>
