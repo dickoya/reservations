@@ -25,11 +25,11 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-
     public String show(@PathVariable Long id, ModelMap model) {
         model.addAttribute("artist", artistService.findById(id));
         return "artists/show"; // Returns the template name "index"
     }
+
     @DeleteMapping("/{id}")
     public Artist delete(@PathVariable Long id) {
         Artist foundArtist = artistService.findById(id);

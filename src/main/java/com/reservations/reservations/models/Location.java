@@ -1,6 +1,7 @@
 package com.reservations.reservations.models;
 
 import com.reservations.reservations.DTO.LocationsDTO;
+import com.github.slugify.Slugify;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,9 +11,9 @@ import java.util.List;
 @Table(name = "locations")
 public class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Column(name = "slug")
+    @Column(name = "slug", unique=true)
     private String slug;
     @Column(name = "designation")
     private String designation;
@@ -52,6 +53,20 @@ public class Location {
     public static Location toLocation(LocationsDTO locationsDTO) {
         return new Location(locationsDTO);
     }
+
+    public Location(String slug, String designation, String address, Locality locality, String website, String phone) {
+        Slugify slg = new Slugify();
+
+        this.slug = slg.slugify(designation);
+        this.designation = designation;
+        this.address = address;
+        this.locality = locality;
+        this.website = website;
+        this.phone = phone;
+    }
+
+
+    protected Location() { }
 
     public Long getId() {
         return id;
@@ -125,4 +140,18 @@ public class Location {
         this.representations = representations;
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", slug='" + slug + '\'' +
+                ", designation='" + designation + '\'' +
+                ", address='" + address + '\'' +
+                ", locality=" + locality +
+                ", website='" + website + '\'' +
+                ", phone='" + phone + '\'' +
+                ", shows=" + shows +
+                ", representations=" + representations +
+                '}';
+    }
 }

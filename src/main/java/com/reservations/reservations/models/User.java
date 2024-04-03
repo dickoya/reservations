@@ -11,8 +11,8 @@ import java.util.List;
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id; // L'identifiant unique de l'utilisateur
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id; // L'identifiant unique de l'utilisateur
     @Column(name = "login", nullable = false)
     private String login; // Le nom d'utilisateur de l'utilisateur
     @Column(name = "password", nullable = false)
@@ -34,8 +34,7 @@ public class User {
     private List<Representation> representations = new ArrayList<>();
 
     // Constructeur
-    public User(int id, String login, String password, String firstname, String lastname, String email, String language, String role, Date created_at) {
-        this.id = id;
+    public User( String login, String password, String firstname, String lastname, String email, String language, String role, Date created_at) {
         this.login = login;
         this.password = password;
         this.firstname = firstname;
@@ -54,7 +53,7 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -128,5 +127,21 @@ public class User {
 
     public void setRepresentations(List<Representation> representations) {
         this.representations = representations;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", language='" + language + '\'' +
+                ", role='" + role + '\'' +
+                ", created_at=" + created_at +
+                ", representations=" + representations +
+                '}';
     }
 }

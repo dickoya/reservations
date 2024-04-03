@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="fr" th:fragment="layout (title, content, script)" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -40,7 +38,12 @@
 
     </div>
 </nav>
-
+<div th:if="${message_success}" class="alert alert-success">
+    <p th:text="${message_success}"></p>
+</div>
+<div th:if="${message_danger}" class="alert alert-danger">
+    <p th:text="${message_danger}"></p>
+</div>
 <div th:replace="${content}"></div>
 <script
         src="https://code.jquery.com/jquery-3.7.1.min.js"

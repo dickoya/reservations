@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<html lang="fr" xmlns="http://www.w3.org/1999/html"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +18,7 @@
     </style>
 </head>
 <body>
+
 <!-- Menu de navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -28,26 +31,32 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/artists">Artists</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">À propos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item">
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/users">Users</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/artists">Artists</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">À propos</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">Contact</a>-->
+<!--                </li>-->
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-                <li class="nav-item">
+                <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/logout">LogOut</a>
                 </li>
-                <li class="nav-item">
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/my-tickets">My tickets</a>
                 </li>
                 <form method="GET">
                     <label>
@@ -65,7 +74,12 @@
         </div>
     </div>
 </nav>
-
+<div th:if="${message_success}" class="alert alert-success">
+    <p th:text="${message_success}"></p>
+</div>
+<div th:if="${message_danger}" class="alert alert-danger">
+    <p th:text="${message_danger}"></p>
+</div>
 <!-- En-tête -->
 <header class="bg-light py-5 header-with-background">
     <div class="container">
@@ -74,14 +88,14 @@
                 <h3> Stevie Nicks </h3>
                 <p>Le mardi 16 juillet, l'icône Stevie Nicks se produira au Sportpaleis, à <br>
                     Anvers. Réservez vos tickets à partir du vendredi 22 mars à 12 heures !</p>
-                <a class="btn btn-primary" href="/bay">Acheter</a>
+                <a class="btn btn-primary" href="/buy-ticket">Acheter</a>
             </div>
         </div>
     </div>
 </header>
 <div class="container my-5">
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='when', sortOrder='asc', searchString=${searchString})}">Tri par Date</a>
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='when', sortOrder='desc', searchString=${searchString})}">Tri par Date Inversé</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='asc', searchString=${searchString})}">Tri par Date</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='desc', searchString=${searchString})}">Tri par Date Inversé</a>
     <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='asc', searchString=${searchString})}">Tri par nom</a>
     <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='desc', searchString=${searchString})}">Tri par nom Inversé</a>
 
@@ -91,11 +105,9 @@
             <img th:src="@{${'/images/' + r.show.posterUrl}}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title" th:text="${r.show.title}">Card title</h5>
-                <p th:text="${r.when}" class="card-text"></p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p th:text="${r.representationDate}" class="card-text"></p>
+                <a th:href="@{'/representations/' + ${r.id}}" class="btn btn-primary">Afficher</a>
             </div>
-        </div>
-        <div>
         </div>
     </div>
 
