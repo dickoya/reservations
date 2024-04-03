@@ -1,7 +1,6 @@
 package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;

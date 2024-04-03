@@ -1,15 +1,16 @@
 package com.reservations.reservations.models;
 
+import com.reservations.reservations.DTO.LocationsDTO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="locations")
+@Table(name = "locations")
 public class Location {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "slug")
     private String slug;
@@ -17,22 +18,40 @@ public class Location {
     private String designation;
     @Column(name = "address")
     private String address;
-//    @Column(name = "locality_id")
-    //    private int locality_id;
     @ManyToOne
-    @JoinColumn(name="locality_id", nullable=false)
+    @JoinColumn(name = "locality_id", nullable = false)
     private Locality locality;
     @Column(name = "website")
     private String website;
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(targetEntity=Show.class, mappedBy="location")
+    @OneToMany(targetEntity = Show.class, mappedBy = "location")
     private List<Show> shows = new ArrayList<>();
 
-    @OneToMany(targetEntity=Representation.class, mappedBy="location")
+    @OneToMany(targetEntity = Representation.class, mappedBy = "location")
     private List<Representation> representations = new ArrayList<>();
-    protected Location() { }
+
+    public Location() {
+    }
+
+    public Location(LocationsDTO locationsDTO) {
+        this.id = locationsDTO.getId();
+        this.designation = locationsDTO.getDesignation();
+        this.slug = locationsDTO.getSlug();
+        this.address = locationsDTO.getAddress();
+        this.locality = locationsDTO.getLocality();
+        this.phone = locationsDTO.getPhone();
+        this.website = locationsDTO.getWebsite();
+    }
+
+    public static LocationsDTO fromLocation(Location location) {
+        return new LocationsDTO(location);
+    }
+
+    public static Location toLocation(LocationsDTO locationsDTO) {
+        return new Location(locationsDTO);
+    }
 
     public Long getId() {
         return id;
@@ -105,4 +124,5 @@ public class Location {
     public void setRepresentations(List<Representation> representations) {
         this.representations = representations;
     }
+
 }

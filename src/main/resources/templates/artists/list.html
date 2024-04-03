@@ -80,7 +80,7 @@
             <td>
                 <a th:href="@{artists/{id}(id=${artist.id})}">Voir</a>
                 <a class="delete-artist" th:href="@{artists/{id}(id=${artist.id})}" th:data-id="${artist.id}">Supprimer</a>
-                <a class="edit-artist" th:href="@{artists/{id}(id=${artist.id})}" th:data-id="${artist.id}" data-bs-toggle="modal" data-bs-target="#editArtistModal">Edit</a>
+                <a class="edit-artist"   th:href="@{artists/{id}(id=${artist.id})}" th:data-id="${artist.id}" data-bs-toggle="modal" data-bs-target="#editArtistModal">Edit</a>
             </td>
         </tr>
         </tbody>
