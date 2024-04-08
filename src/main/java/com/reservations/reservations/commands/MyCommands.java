@@ -14,7 +14,7 @@ public class MyCommands {
     UserRepository userRepository;
 
     @ShellMethod(key = "init-passwords")
-    public void helloWorld(
+    public void initPasswords(
             @ShellOption(defaultValue = "password") String password
     ) {
         var users = userRepository.findAll();
