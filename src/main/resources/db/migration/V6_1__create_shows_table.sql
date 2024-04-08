@@ -18,6 +18,7 @@ CREATE TABLE `shows` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
+  `stripe_product_id` varchar(255),
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET= utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

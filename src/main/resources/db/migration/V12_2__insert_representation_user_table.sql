@@ -1,5 +1,5 @@
 
-INSERT INTO `representation_user` (`id`, `user_id`, `representation_id`, `places`)
+INSERT INTO `representations_users` (`id`, `user_id`, `representation_id`, `number_of_place`)
 VALUES
         (1, 2, 1, 3),
         (2, 2, 2, 5),

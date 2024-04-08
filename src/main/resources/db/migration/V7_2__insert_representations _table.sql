@@ -7,7 +7,7 @@
  * Created: 13 févr. 2024
  */
 
-INSERT INTO `representations` (`id`, `show_id`, `location_id`, `when`, `placeAvailable`)
+INSERT INTO `representations` (`id`, `show_id`, `location_id`, `representation_date`, `place_available`)
 VALUES
         (1, 1, 1, '2012-10-12 13:30', 100),
         (2, 1, 2, '2012-10-12 20:30', 50),
