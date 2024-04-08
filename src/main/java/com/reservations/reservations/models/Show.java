@@ -13,6 +13,9 @@ public class Show {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
+
+    @OneToMany(targetEntity=Representation.class, mappedBy="show")
+    private List<Representation> representations = new ArrayList<>();
     private String slug;
 
     private String title;
@@ -45,8 +48,7 @@ public class Show {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(targetEntity=Representation.class, mappedBy="show")
-    private List<Representation> representations = new ArrayList<>();
+
 
 
     public Show(String slug, String title, String description, Location location, String posterUrl, boolean bookable, double price, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -72,6 +74,14 @@ public class Show {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Representation> getRepresentations() {
+        return representations;
+    }
+
+    public void setRepresentations(List<Representation> representations) {
+        this.representations = representations;
     }
 
     public String getSlug() {

@@ -1,0 +1,19 @@
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Artistes</title>
+
+<div class="content">
+    <h1 th:text="${show.title}"></h1>
+
+    <div th:each="r : ${show.representations}" class="card col-4" style="width: 18rem;">
+        <div th:text="${r.show.description}"></div>
+        <div th:text="${r.show.location.locality.locality}"></div>
+        <div th:text="${r.show.location.address}"></div>
+        <div th:text="${r.getRepresentationDate() }"></div>
+        <a th:href="@{'/representations/' + ${r.id} + '/places'}" class="btn btn-primary">Acheter</a>
+    </div>
+</div>
+
+
+<script>
+</script>
+</html>

@@ -1,37 +1,29 @@
 package com.reservations.reservations.controllers;
 
-import com.reservations.reservations.models.Representation;
-import com.reservations.reservations.repositories.RepresentationRepository;
-import com.reservations.reservations.services.RepresentationService;
+import com.reservations.reservations.services.ShowService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 public class PagesController {
     @Autowired
-    RepresentationService representationService;
-    @Autowired
-    RepresentationRepository representationRepository;
+    ShowService showService;
 
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(defaultValue = "") String searchString,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "3") int size,
-                        @RequestParam(defaultValue = "representationDate") String sortBy,
+                        @RequestParam(defaultValue = "title") String sortBy,
                         @RequestParam(defaultValue = "asc") String sortOrder
     ) {
-        var pageResult = representationService.findBy(searchString, page, size, sortBy, sortOrder);
+        var pageResult = showService.findBy(searchString, page, size, sortBy, sortOrder);
 
-        model.addAttribute("representations", pageResult);
+        model.addAttribute("shows", pageResult);
         model.addAttribute("totalPages", pageResult.getTotalPages());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("searchString", searchString);

@@ -94,19 +94,18 @@
     </div>
 </header>
 <div class="container my-5">
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='asc', searchString=${searchString})}">Tri par Date</a>
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='desc', searchString=${searchString})}">Tri par Date Inversé</a>
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='asc', searchString=${searchString})}">Tri par nom</a>
-    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='show.title', sortOrder='desc', searchString=${searchString})}">Tri par nom Inversé</a>
+<!--    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='asc', searchString=${searchString})}">Tri par Date</a>-->
+<!--    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='representationDate', sortOrder='desc', searchString=${searchString})}">Tri par Date Inversé</a>-->
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='title', sortOrder='asc', searchString=${searchString})}">Tri par nom</a>
+    <a type="button" class="btn btn-primary" th:href="@{/(sortBy='title', sortOrder='desc', searchString=${searchString})}">Tri par nom Inversé</a>
 
     <h2>Contenu principal</h2>
     <div class="row">
-        <div th:each="r : ${representations}" class="card col-4" style="width: 18rem;">
-            <img th:src="@{${'/images/' + r.show.posterUrl}}" class="card-img-top" alt="...">
+        <div th:each="s : ${shows}" class="card col-4" style="width: 18rem;">
+            <img th:src="@{${'/images/' + s.posterUrl}}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title" th:text="${r.show.title}">Card title</h5>
-                <p th:text="${r.representationDate}" class="card-text"></p>
-                <a th:href="@{'/representations/' + ${r.id}}" class="btn btn-primary">Afficher</a>
+                <h5 class="card-title" th:text="${s.title}">Card title</h5>
+                <a th:href="@{'/shows/' + ${s.id}}" class="btn btn-primary">Afficher</a>
             </div>
         </div>
     </div>
