@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name="representations_users")
 public class RepresentationUser {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -20,6 +20,8 @@ public class RepresentationUser {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    private boolean isPaid;
 
     private Integer numberOfPlace;
 
@@ -59,5 +61,13 @@ public class RepresentationUser {
 
     public double getPrice() {
         return getRepresentation().getShow().getPrice() * getNumberOfPlace();
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 }

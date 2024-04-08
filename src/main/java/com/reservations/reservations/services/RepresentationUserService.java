@@ -14,6 +14,9 @@ public class RepresentationUserService {
     @Autowired
     private RepresentationUserRepository representationUserRepository;
 
+    public RepresentationUser findById(Long id) {
+        return representationUserRepository.findById(id).orElse(null);
+    }
     public List<RepresentationUser> findByUser(User user) {
         return representationUserRepository.findAll();
     }

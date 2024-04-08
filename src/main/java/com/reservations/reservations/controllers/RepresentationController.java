@@ -4,6 +4,7 @@ import com.reservations.reservations.models.RepresentationUser;
 import com.reservations.reservations.repositories.RepresentationUserRepository;
 import com.reservations.reservations.repositories.ShowRepository;
 import com.reservations.reservations.services.RepresentationService;
+import com.reservations.reservations.services.RepresentationUserService;
 import com.reservations.reservations.services.UserService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -32,6 +33,12 @@ public class RepresentationController {
     RepresentationService representationService;
 
     @Autowired
+    RepresentationUserService representationUserService;
+
+    @Autowired
+    RepresentationUserService representationUserRepository;
+
+    @Autowired
     RepresentationUserRepository ruRepository;
 
     @Autowired
@@ -53,18 +60,26 @@ public class RepresentationController {
     }
 
     @GetMapping("/representations/{id}/pay")
-    public String pay(@PathVariable Long id, @RequestParam Integer numberOfPlace, ModelMap model) {
+    public String pay(@PathVariable Long id,  @AuthenticationPrincipal User user, @RequestParam Integer numberOfPlace, ModelMap model) {
         var representation = representationService.findById(id);
-        model.addAttribute("representation", representation);
-        model.addAttribute("numberOfPlace", numberOfPlace);
+        var u = userService.findByLogin(user.getUsername());
+        var ru = new RepresentationUser();
+        ru.setUser(u);
+        ru.setPaid(false);
+        ru.setRepresentation(representation);
+        ru.setNumberOfPlace(numberOfPlace);
+        ruRepository.save(ru);
+        model.addAttribute("representation_user", ru);
         return "representations/pay"; // Returns the template name "index"
     }
 
     @PostMapping("/representations/payment-create")
     @ResponseBody
-    public Map<String, String> processPayment(@RequestParam Long id, @RequestParam Long numberOfPlace, ModelMap model) throws StripeException {
+    public Map<String, String> processPayment(@RequestParam Long id, ModelMap model) throws StripeException {
         Stripe.apiKey = "sk_test_51OzQlP00c6h81w5Cd5Y60MsanmgetDtRReD3rv1g4QGguPMP4y66oPB4gukdU1oLD6sHsWL8GM9kOfPLyZKDCrWZ002aPMUDQ4";
-        var representation = representationService.findById(id);
+        var ru = representationUserService.findById(id);
+        var representation = ru.getRepresentation();
+        var numberOfPlace = ru.getNumberOfPlace();
         var show = representation.getShow();
 
         var productId = show.getStripeProductId();
@@ -89,10 +104,10 @@ public class RepresentationController {
                 SessionCreateParams.builder()
                         .setUiMode(SessionCreateParams.UiMode.EMBEDDED)
                         .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setReturnUrl("http://localhost:8080" + "/payment-after?session_id={CHECKOUT_SESSION_ID}&id=" + representation.getId() + "&numberOfPlace=" + numberOfPlace)
+                        .setReturnUrl("http://localhost:8080" + "/payment-after?session_id={CHECKOUT_SESSION_ID}&id=" + ru.getId())
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
-                                        .setQuantity(numberOfPlace)
+                                        .setQuantity(Long.valueOf(numberOfPlace))
                                         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                                         .setPrice(price.getId())
                                         .build())
@@ -107,20 +122,15 @@ public class RepresentationController {
     }
 
     @GetMapping("/payment-after")
-    public RedirectView getSessionStatus(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user, @RequestParam String session_id, @RequestParam Integer numberOfPlace, @RequestParam Long id) throws StripeException {
+    public RedirectView getSessionStatus(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User user, @RequestParam String session_id, @RequestParam Long id) throws StripeException {
         Stripe.apiKey = "sk_test_51OzQlP00c6h81w5Cd5Y60MsanmgetDtRReD3rv1g4QGguPMP4y66oPB4gukdU1oLD6sHsWL8GM9kOfPLyZKDCrWZ002aPMUDQ4";
 
-        var u = userService.findByLogin(user.getUsername());
         Session session = Session.retrieve(session_id);
-
-        var representation = representationService.findById(id);
-        Map<String, String> map = new HashMap<>();
+        var ru = representationUserService.findById(id);
 
         if (session.getStatus().equals("complete")) {
-            var ru = new RepresentationUser();
-            ru.setUser(u);
-            ru.setRepresentation(representation);
-            ru.setNumberOfPlace(numberOfPlace);
+
+            ru.setPaid(true);
             ruRepository.save(ru);
             redirectAttributes.addFlashAttribute("message_success", "Votre paiement à été exécuté avec succès!");
             return new RedirectView("/");

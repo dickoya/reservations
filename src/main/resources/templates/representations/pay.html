@@ -2,9 +2,9 @@
 <title>Réservations - Artistes</title>
 
 <div class="content">
-    <h1 th:text="${representation.show.title}"></h1>
-    <div th:text="${representation.show.location.locality.locality}"></div>
-    <div>nombre de place: <span th:text="${numberOfPlace}"></span></div>
+    <h1 th:text="${representation_user.representation.show.title}"></h1>
+    <div th:text="${representation_user.representation.show.location.locality.locality}"></div>
+    <div>nombre de place: <span th:text="${representation_user.numberOfPlace}"></span></div>
 
     <p th:text="${clientSecret}"></p>
 
@@ -27,8 +27,7 @@
                     "[[${_csrf.headerName}]]": "[[${_csrf.token}]]"
                 },
                 body: new URLSearchParams({
-                    id: "[[${representation.id}]]",
-                    numberOfPlace: "[[${numberOfPlace}]]"
+                    id: "[[${representation_user.id}]]",
                 })
             });
 
