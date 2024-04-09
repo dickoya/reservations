@@ -1,11 +1,22 @@
-<html lang="fr" th:replace="~{layout :: layout(~{::title}, {::.content}, {::script})}"
-      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
 <title>Réservations - Locality</title>
 
-<div class="content">
-    <h1 th:text="|${locality.locality} ${locality.postalCode}|"></h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content">
+                <h2>Localité:</h2>
+                <h1 th:text="${locality.locality}"></h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content">
+                <h2>Code Postal:</h2>
+                <h1 th:text="${locality.postalCode}"></h1>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 <script>
 </script>

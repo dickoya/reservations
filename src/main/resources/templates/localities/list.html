@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" th:replace="~{layout :: layout(~{::title}, {::.content}, {::script})}" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
 <head>
     <title>Réservations - Locality</title>
 </head>
@@ -91,11 +91,11 @@
 <script src="/javascript/Localitys.js"></script>
 <script>
     $('#editLocalityModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget);
-        var locality = button.data('locality');
-        var postalCode = button.data('postal-code');
-        var id = button.data('id');
-        var modal = $(this);
+        const button = $(event.relatedTarget);
+        const locality = button.data('locality');
+        const postalCode = button.data('postal-code');
+        const id = button.data('id');
+        const modal = $(this);
 
         modal.find('#locality-edit').val(locality);
         modal.find('#postalCode-edit').val(postalCode);
