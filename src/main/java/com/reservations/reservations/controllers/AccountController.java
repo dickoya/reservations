@@ -57,7 +57,6 @@ public class AccountController {
             u.setPassword(user.getPassword());
         }
 
-
         userService.save(u);
 
         redirectAttributes.addFlashAttribute("message_success", "Votre profil a été mis à jour!");

@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="fr" th:fragment="layout (title, content, script)" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" th:fragment="layout (title, content, script)" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,24 +11,53 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Réservations</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<!-- Menu de navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Le plateau théâtral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/artists">Artists</a>
+                    <a class="nav-link" href="/">Accueil</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/users">Users</a>
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/logout">LogOut</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/my-tickets">My tickets</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/users">Users</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/artists">Artists</a>
+                </li>
+                <form method="GET">
+                    <label>
+                        <input name="sortBy" th:value="${sortBy}" hidden />
+                    </label>
+                    <label>
+                        <input name="sortOrder" th:value="${sortOrder}" hidden />
+                    </label>
+                    <label>
+                        <input placeholder="Rechercher" name="searchString" th:value="${searchString}" />
+                    </label>
+                    <button type="Submit">Submit</button>
+                </form>
             </ul>
         </div>
-
     </div>
 </nav>
 <div th:if="${message_success}" class="alert alert-success">

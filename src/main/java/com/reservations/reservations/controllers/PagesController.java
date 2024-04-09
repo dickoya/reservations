@@ -17,7 +17,7 @@ public class PagesController {
     public String index(Model model,
                         @RequestParam(defaultValue = "") String searchString,
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "3") int size,
+                        @RequestParam(defaultValue = "9") int size,
                         @RequestParam(defaultValue = "title") String sortBy,
                         @RequestParam(defaultValue = "asc") String sortOrder
     ) {
