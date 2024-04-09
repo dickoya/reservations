@@ -16,7 +16,7 @@ public class Locality {
     @OneToMany( targetEntity=Location.class, mappedBy="locality" )
     private List<Location> locations = new ArrayList<>();
 
-    protected Locality() {	}
+    public Locality() {	}
 
     public Long getId() {
         return id;
