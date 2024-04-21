@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+    <title>Réservations - Locality</title>
+
+
+<div class="content">
+    <h2>Liste des localités</h2>
+
+        <div class="actions">
+            <a th:href="@{/localities/create}">Add new localité</a>
+        </div>
+
+        <table th:unless="${#lists.isEmpty(localities)}">
+            <thead>
+            <tr>
+                <th>localités</th>
+                <th colspan="3"> Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="locality : ${localities}">
+                <td th:text="|${locality.postalCode} ${locality.locality}|">1000 Bruxelles</td>
+                <td><a th:href="@{/localities/{id}(id=${locality.id})}">View</a> </td>
+                <td><a th:href="@{/localities/{id}/edit(id=${locality.id})}">Edit</a></td>
+                <td>
+                    <form th:id="|deleteForm-${locality.id}|"
+                          th:action="@{/localities/{id}(id=${locality.id})}" th:method="delete">
+                        <a href="#" th:onclick="|if(confirm('Confirm delete Locality #${locality.id} ?'))
+                                       document.getElementById('deleteForm-${locality.id}').submit();
+                                       return false;|">Delete</a>
+
+
+                            <p th:if="${successMessage}" th:text="${successMessage}" class="alert-success"></p>
+                            <p th:if="${deleteError}" th:text="${deleteError}" class="alert-danger"></p>
+
+                    </form>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!--<div class="content">-->
+    <!-- Bouton pour créer un Localitye -->
+    <!--<button id="btn-create-user" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Créer une Localité
+    </button>-->
+
+    <!-- Modal de création de localité -->
+ <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Créer une Localité</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              -->
+                  <!-- Formulaire de création de localité -->
+ <!--<form id="form-create-Locality" th:object="${locality}" th:action="@{/localities/create}" method="post">
+     <label for="locality">Localité</label>
+     <input class="form-control" type="text" th:field="*{locality}" id="locality" name="locality">
+
+     <label for="postalCode">Code Postal</label>
+     <input class="form-control" type="text" th:field="*{postalCode}" id="postalCode" name="postalCode">
+
+     <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+         <button type="submit" class="btn btn-primary">Enregistrer</button>
+     </div>
+ </form>
+</div>
+</div>
+</div>
+</div>
+-->
+<!-- Modal d'édition de localité -->
+ <!-- <div class="modal fade" id="editLocalityModal" tabindex="-1" aria-labelledby="editLocalityModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="editLocalityModalLabel">Mettre à jour une localité</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              -->
+                  <!-- Formulaire de création de localité -->
+ <!-- <form th:object="${locality}" th:action="@{/localities/edit}" method="post">
+      <input id="id" th:field="*{id}" hidden name="id">
+      <label for="locality">localité</label>
+      <input class="form-control" th:field="*{locality}" id="locality-edit" name="locality">
+      <label for="postalCode">Code Postal</label>
+      <input class="form-control" th:field="*{postalCode}" id="postalCode-edit" name="postalCode">
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </div>
+  </form>
+</div>
+</div>
+</div>
+</div>
+-->
+<!-- Tableau des locality -->
+ <!-- <table id="localities" class="table">
+      <thead>
+      <tr>
+          <th>Localité</th>
+          <th>Code postal</th>
+          <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      -->
+      <!-- Boucle pour afficher les locality -->
+ <!--<tr th:each="locality : ${localities}">
+     <td th:text="${locality.locality}"></td>
+     <td th:text="${locality.postalCode}"></td>
+     <td>
+         <a th:href="@{localities/{id}(id=${locality.id})}">Voir</a>
+         <a class="delete-Locality" th:href="@{localities/delete/{id}(id=${locality.id})}">Supprimer</a>
+         <a class="edit-Locality" th:href="@{localities/{id}(id=${locality.id})}" th:data-id="${locality.id}" data-bs-toggle="modal" data-bs-target="#editLocalityModal" th:data-locality="${locality.locality}" th:data-postal-code="${locality.postalCode}">Edit</a>
+     </td>
+ </tr>
+ </tbody>
+</table>
+
+</div>
+
+<script src="/javascript/Localitys.js"></script>
+<script>
+$('#editLocalityModal').on('show.bs.modal', function(event) {
+ const button = $(event.relatedTarget);
+ const locality = button.data('locality');
+ const postalCode = button.data('postal-code');
+ const id = button.data('id');
+ const modal = $(this);
+
+ modal.find('#locality-edit').val(locality);
+ modal.find('#postalCode-edit').val(postalCode);
+ modal.find('#id').val(id);
+});
+</script>
+*/
+-->
+

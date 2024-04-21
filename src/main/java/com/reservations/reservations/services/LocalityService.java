@@ -1,24 +1,19 @@
 package com.reservations.reservations.services;
 
-import com.reservations.reservations.exceptions.GeneralException;
 import com.reservations.reservations.models.Locality;
 import com.reservations.reservations.repositories.LocalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocalityService {
 
     @Autowired
     private LocalityRepository localityRepository;
-
-    public Locality save(Locality locality) throws GeneralException {
-        if (locality.getLocality() == null || locality.getLocality().isBlank())
-            throw new GeneralException("Locality name is mandatory");
-        if (!localityRepository.existsByLocality(locality.getLocality()))
-            return localityRepository.save(locality);
-        throw new GeneralException("Locality already exist in database");
-    }
 
     public Locality findById(Long id) {
         return localityRepository.findById(id).orElse(null);
@@ -28,33 +23,33 @@ public class LocalityService {
         return localityRepository.findAll();
     }
 
-    public Locality update(Locality locality) throws GeneralException {
-        if (locality.getId() != null) {
-            var localityFound = this.localityRepository.findById(locality.getId())
-                    .orElseThrow(() -> new GeneralException("Locality does not exit in the database"));
-            var blogCategoryFoundByName = this.localityRepository
-                    .findByLocality(locality.getLocality());
-            if (blogCategoryFoundByName != null && blogCategoryFoundByName.getId() != localityFound.getId()) {
-                throw new GeneralException("New locality name already exist in database");
-            }
-            localityFound.setLocality(
-                    locality.getLocality() != null && !locality.getLocality().isBlank()
-                            ? locality.getLocality()
-                            : localityFound.getLocality());
-            localityFound.setPostalCode(
-                    locality.getPostalCode() != null && !locality.getPostalCode().isBlank()
-                            ? locality.getPostalCode()
-                            : localityFound.getPostalCode());
-            return this.localityRepository.save(localityFound);
-        }
-        throw new GeneralException("Locality to update could not be found");
+    public void update(Long id, Locality locality) {
+        localityRepository.save(locality);
     }
 
-    public void delete(Long id) throws GeneralException {
-        if (localityRepository.existsById(id)) {
-            localityRepository.deleteById(id);
-        } else {
-            throw new GeneralException("Locality not found with ID: " + id);
-        }
+    public List<Locality> getAll() {
+        List<Locality> localities = new ArrayList<>();
+
+        localityRepository.findAll().forEach(localities::add);
+
+        return localities;
     }
+
+    public Locality get(String id) {
+        Long indice = (long) Integer.parseInt(id);
+        Optional<Locality> locality = localityRepository.findById(indice);
+
+        return locality.isPresent() ? locality.get() : null;
+    }
+
+    public void delete(String id) {
+        Long indice = (long) Integer.parseInt(id);
+
+        localityRepository.deleteById(indice);
+    }
+
+    public void add(Locality locality) {
+        localityRepository.save(locality);
+    }
+
 }
