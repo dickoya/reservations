@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Réservations - Location</title>
+</head>
+<body>
+<div class="content">
+    <!-- Bouton pour créer une location -->
+    <button id="btn-create-user" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Créer une location
+    </button>
+
+    <!-- Modal de création de location -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Créer une location</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulaire de création de location -->
+                    <form id="form-create-location" th:object="${location}" th:action="@{/locations/create}" method="post">
+                        <label for="address">Adresse</label>
+                        <input class="form-control" type="text" th:field="*{address}" id="address" name="address">
+
+                        <label for="designation">Designation</label>
+                        <input class="form-control" type="text" th:field="*{designation}" id="designation" name="designation">
+
+                        <label for="phone">Phone</label>
+                        <input class="form-control" type="text" th:field="*{phone}" id="phone" name="phone">
+
+                        <label for="slug">Slug</label>
+                        <input class="form-control" type="text" th:field="*{slug}" id="slug" name="slug">
+
+                        <label for="website">Site Web</label>
+                        <input class="form-control" type="text" th:field="*{website}" id="website" name="website">
+
+                        <label for="locality">Localité</label>
+                        <select th:field="*{locality}" id="locality" name="locality" class="form-control">
+                            <option th:each="locality : ${localities}" th:value="${locality.id}" class="form-control" th:text="${locality.locality}"></option>
+                        </select>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal d'édition de location -->
+    <div class="modal fade" id="editlocationModal" tabindex="-1" aria-labelledby="editlocationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editlocationModalLabel">Mettre à jour une location</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulaire de création de location -->
+                    <form th:object="${location}" th:action="@{/locations/edit}" method="post">
+                        <input id="id" th:field="*{id}" hidden name="id">
+                        <label for="address">Adresse</label>
+                        <input class="form-control" th:field="*{address}" id="address-edit" name="address">
+                        <label for="designation">Designation</label>
+                        <input class="form-control" th:field="*{designation}" id="designation-edit" name="designation">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" type="text" th:field="*{phone}" id="phone-edit" name="phone"><label for="slug">Slug</label>
+                        <input class="form-control" type="text" th:field="*{slug}" id="slug-edit" name="slug">
+                        <label for="website">Site Web</label>
+                        <input class="form-control" type="text" th:field="*{website}" id="website-edit" name="website">
+                        <label for="locality">Localité</label><br>
+                        <select for="locality" th:field="*{locality}" id="locality-edit" name="locality">
+                            <option th:each="locality : ${localities}" th:value="${locality.id}" class="form-control"
+                                    th:text="${locality.locality}">
+                            </option>
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des location -->
+    <table id="locations" class="table">
+        <thead>
+        <tr>
+            <th>Adresse</th>
+            <th>Designation</th>
+            <th>Telephone</th>
+            <th>Slug</th>
+            <th>Site web</th>
+            <th>localité</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Boucle pour afficher les locations -->
+        <tr th:each="location : ${locations}">
+            <td th:text="${location.address}"></td>
+            <td th:text="${location.designation}"></td>
+            <td th:text="${location.phone}"></td>
+            <td th:text="${location.slug}"></td>
+            <td th:text="${location.website}"></td>
+            <td th:text="${location.locality.locality}"></td>
+            <td>
+                <a th:href="@{locations/{id}(id=${location.id})}">Voir</a>
+                <a class="delete-location" th:href="@{locations/delete/{id}(id=${location.id})}">Supprimer</a>
+                <a class="edit-location" th:href="@{locations/{id}(id=${location.id})}"
+                   data-bs-toggle="modal" data-bs-target="#editlocationModal" th:data-location-id="${location.id}">
+                    Edit
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.edit-location').click(function () {
+            var locationId = $(this).data('location-id');
+            var address = $(this).closest('tr').find('td:nth-child(1)').text();
+            var designation = $(this).closest('tr').find('td:nth-child(2)').text();
+            var phone = $(this).closest('tr').find('td:nth-child(3)').text();
+            var slug = $(this).closest('tr').find('td:nth-child(4)').text();
+            var website = $(this).closest('tr').find('td:nth-child(5)').text();
+            var localityId = $(this).closest('tr').find('td:nth-child(6)').text();
+
+            $('#id').val(locationId);
+            $('#address-edit').val(address);
+            $('#designation-edit').val(designation);
+            $('#phone-edit').val(phone);
+            $('#slug-edit').val(slug);
+            $('#website-edit').val(website);
+
+            $('#locality-edit option[value="' + localityId + '"]').prop('selected', true);
+        });
+    });
+</script>
+<script src="/javascript/locations.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
