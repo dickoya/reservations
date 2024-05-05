@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Modification d'une Localité</title>
+    <style>.fieldError { color: red; }</style>
+</head>
+<body>
+    <div class="container">
+    <div layout:fragment="content">
+        <h1 th:text="|${localitye.postalCode} ${localitye.locality}|">1000 Bruxelles</h1>
+
+        <form th:action="@{/localities/{id}/edit(id=${localitye.id})}" th:object="${localitye}" th:method="put">
+            <div>
+                <label>Id:</label>
+                <span th:text="${localitye.id}">1</span>
+            </div>
+            <div>
+                <label>Code postal :</label>
+                <input type="text" th:field="*{postalCode}">
+                <p th:if="${#fields.hasErrors('postalCode')}"
+                   th:errors="*{postalCode}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <label>Locality:</label>
+                <input type="text" th:field="*{locality}">
+                <p th:if="${#fields.hasErrors('locality')}"
+                   th:errors="*{locality}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <button type="submit" th:text="Modifier">Modifier</button>
+                <button type="reset" th:text="Réinitialiser">Réinitialiser</button>
+                <a th:href="${back}">Annuler</a>
+            </div>
+        </form>
+
+        <nav><a th:href="@{/localities}">Retour à l'index</a></nav>
+    </div>
+    </div>
+</body>
+</html>
+
+

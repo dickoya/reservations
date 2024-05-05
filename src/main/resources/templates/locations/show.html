@@ -1,0 +1,11 @@
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Locality</title>
+
+<div class="content">
+    <h1 th:text="|${location.address} ${location.phone} ${location.slug} ${location.designation} ${location.locality.locality} ${location.website}|"></h1>
+</div>
+
+
+<script>
+</script>
+</html>

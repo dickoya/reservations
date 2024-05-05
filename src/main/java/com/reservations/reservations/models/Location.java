@@ -45,7 +45,7 @@ public class Location {
     }
 
 
-    protected Location() { }
+    public Location() { }
 
     public Long getId() {
         return id;

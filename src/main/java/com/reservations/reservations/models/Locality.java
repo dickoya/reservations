@@ -1,6 +1,8 @@
 package com.reservations.reservations.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +11,27 @@ import java.util.List;
 @Table(name="localities")
 public class Locality {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "The postal Code must not be empty.")
+    @Size(max=6, message = "The postal Code must be 6 characters long.")
     private String postalCode;
+
+    @NotEmpty(message = "The locality must not be empty.")
+    @Size(max=60, message = "The locality must be 60 characters long.")
     private String locality;
+
+
     @OneToMany( targetEntity=Location.class, mappedBy="locality" )
     private List<Location> locations = new ArrayList<>();
 
     public Locality() {	}
+
+    public Locality(String postalCode, String locality) {
+        this.postalCode = postalCode;
+        this.locality = locality;
+    }
 
     public Long getId() {
         return id;
