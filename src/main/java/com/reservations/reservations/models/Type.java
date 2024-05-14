@@ -12,6 +12,7 @@ public class Type {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "type")
     private String type;
 
     @ManyToMany

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr" >
+<head>
+
+    <title>Reservation - Types-Artists</title>
+    <!-- Ajout de Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4 mb-3">Affichage des types d'artiste</h2>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Boucle pour afficher les types -->
+        <tr th:each="type : ${types}">
+            <td th:text="${type.type}"></td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{/types/{id}(id=${type.id})}">Voir</a>
+                <a class="btn btn-warning btn-sm" th:href="@{/types/edit/{id}(id=${type.id})}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="@{/types/delete/{id}(id=${type.id})}">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Ajout de Bootstrap JS et jQuery (nécessaire pour certains composants Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

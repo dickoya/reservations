@@ -98,7 +98,8 @@
             <th>Telephone</th>
             <th>Slug</th>
             <th>Site web</th>
-            <th>localité</th>
+            <th>Localité</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -111,12 +112,10 @@
             <td th:text="${location.website}"></td>
             <td th:text="${location.locality.locality}"></td>
             <td>
-                <a th:href="@{locations/{id}(id=${location.id})}">Voir</a>
-                <a class="delete-location" th:href="@{locations/delete/{id}(id=${location.id})}">Supprimer</a>
-                <a class="edit-location" th:href="@{locations/{id}(id=${location.id})}"
-                   data-bs-toggle="modal" data-bs-target="#editlocationModal" th:data-location-id="${location.id}">
-                    Edit
-                </a>
+                <a class="btn btn-primary btn-sm" th:href="@{locations/{id}(id=${location.id})}">Voir</a>
+                <a class="btn btn-warning btn-sm" th:href="@{locations/delete/{id}(id=${location.id})}">Supprimer</a>
+                <a class="btn btn-danger btn-sm" th:href="@{locations/{id}(id=${location.id})}"
+                   data-bs-toggle="modal" data-bs-target="#editlocationModal" th:data-location-id="${location.id}">Edit</a>
             </td>
         </tr>
         </tbody>

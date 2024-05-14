@@ -20,7 +20,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/">Accueil</a>
                 </li>
                 <li sec:authorize="!isAuthenticated()" class="nav-item">
@@ -43,6 +43,15 @@
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/artists">Artists</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/locations">Locations</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/localities">Localities</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/types">Types</a>
                 </li>
                 <form method="GET">
                     <label>
