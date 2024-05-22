@@ -9,14 +9,14 @@ import java.util.List;
 @Table(name="types")
 public class Type {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private String type;
 
     @ManyToMany
     @JoinTable(name = "artist_type",
-            joinColumns = @JoinColumn(name = "id"),
+            joinColumns = @JoinColumn(name = "type_id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id"))
     private List<Artist> artists = new ArrayList<>();
 
@@ -24,6 +24,13 @@ public class Type {
     public Type(Long id, String type) {
         this.id = id;
         this.type = type;
+    }
+
+    public Type(TypeDTO typeDTO){
+        this.type = typeDTO.getType();
+    }
+    public static Type toType(TypeDTO typeDTO){
+        return new Type(typeDTO);
     }
 
     public Long getId() {

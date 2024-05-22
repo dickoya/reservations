@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Type</title>
+
+
+<div class="content">
+    <h2>Liste des types</h2>
+
+    <div class="actions">
+        <a th:href="@{/types/create}">Add new type</a>
+    </div>
+
+    <table th:unless="${#lists.isEmpty(types)}">
+        <thead>
+        <tr>
+            <th>types</th>
+            <th colspan="3"> Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="type : ${types}">
+            <td th:text="${type.type}"></td>
+            <td><a th:href="@{/types/{id}(id=${type.id})}">View</a> </td>
+            <td><a th:href="@{/types/{id}/edit(id=${type.id})}">Edit</a></td>
+            <td>
+                <form th:id="|deleteForm-${type.id}|"
+                      th:action="@{/types/delete/{id}(id=${type.id})}">
+                    <a href="#" th:onclick="|if(confirm('Confirm delete type #${type.id} ?'))
+                                       document.getElementById('deleteForm-${type.id}').submit();
+                                       return false;|">Delete</a>
+
+
+                    <p th:if="${successMessage}" th:text="${successMessage}" class="alert-success"></p>
+                    <p th:if="${deleteError}" th:text="${deleteError}" class="alert-danger"></p>
+
+                </form>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="content">-->
+<!-- Bouton pour créer un typee -->
+<!--<button id="btn-create-user" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Créer une type
+</button>-->
+
+<!-- Modal de création de type -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h1 class="modal-title fs-5" id="exampleModalLabel">Créer une type</h1>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+             -->
+<!-- Formulaire de création de type -->
+<!--<form id="form-create-type" th:object="${type}" th:action="@{/types/create}" method="post">
+    <label for="type">type</label>
+    <input class="form-control" type="text" th:field="*{type}" id="type" name="type">
+
+    <label for="postalCode">Code Postal</label>
+    <input class="form-control" type="text" th:field="*{postalCode}" id="postalCode" name="postalCode">
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+-->
+<!-- Modal d'édition de type -->
+<!-- <div class="modal fade" id="edittypeModal" tabindex="-1" aria-labelledby="edittypeModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h1 class="modal-title fs-5" id="edittypeModalLabel">Mettre à jour une type</h1>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+             -->
+<!-- Formulaire de création de type -->
+<!-- <form th:object="${type}" th:action="@{/types/edit}" method="post">
+     <input id="id" th:field="*{id}" hidden name="id">
+     <label for="type">type</label>
+     <input class="form-control" th:field="*{type}" id="type-edit" name="type">
+     <label for="postalCode">Code Postal</label>
+     <input class="form-control" th:field="*{postalCode}" id="postalCode-edit" name="postalCode">
+     <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+         <button type="submit" class="btn btn-primary">Enregistrer</button>
+     </div>
+ </form>
+</div>
+</div>
+</div>
+</div>
+-->
+<!-- Tableau des type -->
+<!-- <table id="types" class="table">
+     <thead>
+     <tr>
+         <th>type</th>
+         <th>Code postal</th>
+         <th>Actions</th>
+     </tr>
+     </thead>
+     <tbody>
+     -->
+<!-- Boucle pour afficher les type -->
+<!--<tr th:each="type : ${types}">
+    <td th:text="${type.type}"></td>
+    <td th:text="${type.postalCode}"></td>
+    <td>
+        <a th:href="@{types/{id}(id=${type.id})}">Voir</a>
+        <a class="delete-type" th:href="@{types/delete/{id}(id=${type.id})}">Supprimer</a>
+        <a class="edit-type" th:href="@{types/{id}(id=${type.id})}" th:data-id="${type.id}" data-bs-toggle="modal" data-bs-target="#edittypeModal" th:data-type="${type.type}" th:data-postal-code="${type.postalCode}">Edit</a>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+<script src="/javascript/types.js"></script>
+<script>
+$('#edittypeModal').on('show.bs.modal', function(event) {
+const button = $(event.relatedTarget);
+const type = button.data('type');
+const postalCode = button.data('postal-code');
+const id = button.data('id');
+const modal = $(this);
+
+modal.find('#type-edit').val(type);
+modal.find('#postalCode-edit').val(postalCode);
+modal.find('#id').val(id);
+});
+</script>
+*/
+-->
+

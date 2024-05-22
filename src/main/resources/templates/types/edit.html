@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Modification dun type</title>
+    <style>.fieldError { color: red; }</style>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1 th:text="${type.type}"></h1>
+
+        <form th:action="@{/types/{id}/edit(id=${type.id})}" th:object="${type}" th:method="put">
+            <div>
+                <label>Id:</label>
+                <span th:text="${type.id}"></span>
+            </div>
+            <div>
+                <label>type:</label>
+                <input type="text" th:field="*{type}">
+                <p th:if="${#fields.hasErrors('type')}"
+                   th:errors="*{type}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <button type="submit" th:text="Modifier">Modifier</button>
+                <button type="reset" th:text="Réinitialiser">Réinitialiser</button>
+                <a th:href="${back}">Annuler</a>
+            </div>
+        </form>
+
+        <nav><a th:href="@{/types}">Retour à l'index</a></nav>
+    </div>
+</div>
+</body>
+</html>
+
