@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+<head>
+    <title>Création d'un artist</title>
+    <style>
+        .fieldError { color: red; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1>Nouveau Artiste</h1>
+
+        <form th:action="@{/artists/create}" th:object="${artist}" method="post">
+            <div>
+                <label>Firstname:</label>
+                <input type="text" th:field="*{firstname}">
+                <p th:if="${#fields.hasErrors('firstname')}"
+                   th:errors="*{firstname}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <label>Lastname:</label>
+                <input type="text" th:field="*{lastname}">
+                <p th:if="${#fields.hasErrors('lastname')}"
+                   th:errors="*{lastname}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <button type="submit" th:text="Create">Create</button>
+                <button type="reset" th:text="Réinitialiser">Réinitialiser</button>
+                <a th:href="@{/localities}">Annuler</a>
+            </div>
+        </form>
+
+        <nav><a th:href="@{/artists}">Retour à l'index</a></nav>
+    </div>
+</div>
+</body>
+</html>
+
+
