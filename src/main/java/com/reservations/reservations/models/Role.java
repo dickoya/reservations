@@ -2,6 +2,7 @@ package com.reservations.reservations.models;
 
 public enum Role{
 
+    INVITES("INVITES", "invites"),
     MEMBER("MEMBER", "member"),
     ADMIN("ADMIN", "admin");
 

@@ -1,51 +1,63 @@
 <!DOCTYPE html>
-<html>
-    <title>Réservations - Locality</title>
-
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - Artists</title>
 
 <div class="content">
-    <h2>Liste des localités</h2>
+</div>
+</html>
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Réservations - Locality</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Liste des localités</h2>
 
-        <div class="actions">
-            <a th:href="@{/localities/create}">Add new localité</a>
-        </div>
+    <div class="mb-3">
+        <a class="btn btn-primary" th:href="@{/localities/create}">Ajouter une nouvelle localité</a>
+    </div>
 
-        <table th:unless="${#lists.isEmpty(localities)}">
-            <thead>
-            <tr>
-                <th>localités</th>
-                <th colspan="3"> Actions </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="locality : ${localities}">
-                <td th:text="|${locality.postalCode} ${locality.locality}|">1000 Bruxelles</td>
-                <td><a th:href="@{/localities/{id}(id=${locality.id})}">View</a> </td>
-                <td><a th:href="@{/localities/{id}/edit(id=${locality.id})}">Edit</a></td>
-                <td>
-                    <form th:id="|deleteForm-${locality.id}|"
-                          th:action="@{/localities/{id}(id=${locality.id})}" th:method="delete">
-                        <a href="#" th:onclick="|if(confirm('Confirm delete Locality #${locality.id} ?'))
-                                       document.getElementById('deleteForm-${locality.id}').submit();
-                                       return false;|">Delete</a>
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <div th:if="${deleteError}" class="alert alert-danger" role="alert">
+        <p th:text="${deleteError}"></p>
+    </div>
 
-
-                            <p th:if="${successMessage}" th:text="${successMessage}" class="alert-success"></p>
-                            <p th:if="${deleteError}" th:text="${deleteError}" class="alert-danger"></p>
-
-                    </form>
-
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-
-
+    <table class="table table-striped" th:if="${!#lists.isEmpty(localities)}">
+        <thead class="thead-dark">
+        <tr>
+            <th>Localités</th>
+            <th colspan="3">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="locality : ${localities}">
+            <td th:text="|${locality.postalCode} ${locality.locality}|">1000 Bruxelles</td>
+            <td><a class="btn btn-info btn-sm" th:href="@{/localities/{id}(id=${locality.id})}">Voir</a></td>
+            <td><a class="btn btn-warning btn-sm" th:href="@{/localities/{id}/edit(id=${locality.id})}">Modifier</a></td>
+            <td>
+                <form th:id="|deleteForm-${locality.id}|" th:action="@{/localities/{id}(id=${locality.id})}" th:method="delete">
+                    <button type="button" class="btn btn-danger btn-sm" th:onclick="|if(confirm('Confirmer la suppression de la localité #${locality.id} ?')) document.getElementById('deleteForm-${locality.id}').submit();|">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(localities)}">
+        <p class="text-center">Aucune localité trouvée.</p>
+    </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
+
 
 
 

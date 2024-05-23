@@ -2,58 +2,57 @@
 <html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
     <title>Réservations - Artists</title>
 
-
 <div class="content">
-    <h2>Liste des Artistes</h2>
+</div>
+</html>
 
 
-    <!-- Messages de succès et d'erreur -->
-    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-    <div th:if="${deleteError}" class="alert alert-danger" th:text="${deleteError}"></div>
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservations - Artists</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Liste des Artistes</h2>
 
+    <div class="mb-3">
+        <a class="btn btn-primary" th:href="@{/artists/create}">Ajouter un nouvel artiste</a>
+    </div>
 
-        <div class="actions">
-            <a th:href="@{/artists/create}">Add new Artists</a>
-        </div>
-
-
-
-        <table th:unless="${#lists.isEmpty(artists)}">
-            <thead>
-            <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th colspan="3"> Actions </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="artist : ${artists}">
-                <td th:text="|${artist.firstname}|">Daniel</td>
-                <td th:text="|${artist.lastname}|">Marcelin</td>
-
-                <td><a th:href="@{/artists/{id}(id=${artist.id})}">View</a> </td>
-                <td><a th:href="@{/artists/{id}/edit(id=${artist.id})}">Edit</a></td>
-                <td>
-                    <form th:id="|deleteForm-${artist.id}|"
-                          th:action="@{/artists/{id}(id=${artist.id})}" th:method="delete">
-                        <a href="#" th:onclick="|if(confirm('Confirm delete Artist #${artist.id} ?'))
-                                       document.getElementById('deleteForm-${artist.id}').submit();
-                                       return false;|">Delete</a>
-
-
-                            <p th:if="${successMessage}" th:text="${successMessage}" class="alert-success"></p>
-                            <p th:if="${deleteError}" th:text="${deleteError}" class="alert-danger"></p>
-
-                    </form>
-
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-
-
+    <table class="table table-striped" th:if="${!#lists.isEmpty(artists)}">
+        <thead class="thead-dark">
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th colspan="3">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artist : ${artists}">
+            <td th:text="${artist.firstname}">Daniel</td>
+            <td th:text="${artist.lastname}">Marcelin</td>
+            <td><a class="btn btn-info btn-sm" th:href="@{/artists/{id}(id=${artist.id})}">Voir</a></td>
+            <td><a class="btn btn-warning btn-sm" th:href="@{/artists/{id}/edit(id=${artist.id})}">Modifier</a></td>
+            <td>
+                <form th:id="|deleteForm-${artist.id}|" th:action="@{/artists/{id}(id=${artist.id})}" th:method="delete">
+                    <button type="button" class="btn btn-danger btn-sm" th:onclick="|if(confirm('Confirmer la suppression de l\'artiste #${artist.id} ?')) document.getElementById('deleteForm-${artist.id}').submit();|">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(artists)}">
+        <p class="text-center">Aucun artiste trouvé.</p>
+    </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
+

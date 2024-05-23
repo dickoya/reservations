@@ -2,13 +2,12 @@
 <title>Réservations - Artistes</title>
 
 <div class="content">
-    <h1 th:text="${representation.show.title}"></h1>
-    <div th:text="${representation.show.description}"></div>
-    <div th:text="${representation.show.location.locality.locality}"></div>
-    <div th:text="${representation.show.location.address}"></div>
-    <div th:text="${representation.getRepresentationDate() }"></div>
+    <h1 class="card-title" th:text=" 'Titre : ' + ${representation.show.title}"></h1>
+    <p class="card-text" th:text="'Description : ' + ${representation.show.description}"></p>
+    <p class="card-text" th:text="'Localité : ' + ${representation.show.location.locality.locality}"></p>
+    <p class="card-text" th:text="'Address : ' + ${representation.show.location.address}"></p>
+    <p class="card-text" th:text="'Date : ' + ${representation.getRepresentationDate() }"></p>
     <a th:href="@{'/representations/' + ${representation.id} + '/places'}" class="btn btn-primary">Acheter</a>
-
 </div>
 <script>
 </script>

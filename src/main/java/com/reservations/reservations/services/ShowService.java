@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShowService {
     @Autowired
@@ -27,5 +29,12 @@ public class ShowService {
 
         String searchQuery = "%"+searchString+"%";
         return showRepository.findAllByTitleLike(searchQuery, pageable);
+    }
+
+    public List<Show> getAllShows() {
+        return showRepository.findAll();
+    }
+
+    public void saveAll(List<Show> shows) {
     }
 }

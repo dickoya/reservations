@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
+<title>Réservations - my_tickets</title>
+
+<div class="content">
+</div>
+</html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,18 +15,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<<!--div class="row">
-    <div th:each="ru : ${representationUsers}" class="card col-4" style="width: 18rem;">
-        <img th:src="@{${'/images/' + ru.representation.show.posterUrl}}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${ru.representation.show.title}"></h5>
-            <p th:text="${ru.representation.representationDate}" class="card-text"></p>
-            <p th:text="${ru.price+'€ (' + ru.numberOfPlace + ' places)'}" class="card-text"></p>
-            <a th:href="@{'/representations/' + ${ru.representation.id}}" class="btn btn-primary">Voir la représentation</a>
-        </div>
-    </div>
-</div>-->
 <div class="row">
     <div th:each="ru : ${representationUsers}" class="card col-md-4 mb-4">
         <img th:src="@{${'/images/' + ru.representation.show.posterUrl}}" class="card-img-top" alt="...">
@@ -35,7 +30,6 @@
         </div>
     </div>
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
