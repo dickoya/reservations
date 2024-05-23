@@ -1,11 +1,45 @@
-<html lang="fr" th:replace="~{layout :: layout(~{::title}, ~{::.content}, ~{::script})}">
-<title>Réservations - Artistes</title>
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout" layout:decorate="~{layouts/main}">
+<head>
+    <title>Details localité</title>
+    <style>
+        .fieldError { color: red; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
 
-<div class="content">
-    <h1 th:text="|${artist.firstname} ${artist.lastname}|"></h1>
+        <h1>Details artist</h1>
+
+        <h2>Prenom : <span th:text="${artist.firstname}">Daniel</span></h2>
+        <h2>Nom: <span th:text="${artist.lastname}">Marcelin</span></h2>
+
+
+
+
+        <h2>Liste des types</h2>
+        <ul th:unless="${#lists.isEmpty(artist.types)}">
+            <li th:each="type : ${artist.types}" th:text="${type.type}">Type</li>
+        </ul>
+
+
+        <div class="actions">
+            <a th:href="@{/artists/{id}/edit(id=${artist.id})}">Modifier</a>
+            <form th:id="|deleteForm-${artist.id}|"
+                  th:action="@{/artists/{id}(id=${artist.id})}" th:method="delete">
+                <a href="#" th:onclick="|if(confirm('Confirm delete Artist #${artist.id} ?'))
+                                       document.getElementById('deleteForm-${artist.id}').submit();
+                                       return false;|">Delete</a>
+            </form>
+        </div>
+
+        <nav><a th:href="@{/artists}">Retour à l'index</a></nav>
+    </div>
 </div>
-
-
-<script>
-</script>
+</body>
 </html>
